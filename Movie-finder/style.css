@@ -7,10 +7,16 @@
 body {
     font-family: Arial, sans-serif; /*set a clean, sans- serif font */
 background-color: #f0f0f0;/* set background color for my page*/
-
+transition: background-color 0.3 ease, color 0.3s ease; /* add transition*/
 
 
 }
+
+body.dark-mode {
+    background-color: #333; /*set dark mode bg color*/
+    color: #fff;
+
+} 
 .container {
 max-width: 1200px; /*maximum width of the container */
 margin: 0 auto; /*centers the container horizontally */
@@ -66,10 +72,14 @@ h1 {
     box-shadow: 0px 4px 12px rgba(0,0,0,0.1); /*light shadow for 3d effect */
     padding: 10px; /* adds space inside the card */
     margin-bottom: 20px;/* adds space below each card*/
-
+    transition: transform 0.3s ease-in-out; /*add transition*/
 
 }
 
+.movie-card:hover {
+    transform: scale(1.05); /*slightly enlarge the card when hovered*/
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.2); /*enhance shadow on hover*/
+}
 .movie-card img {
     width: 100; /* makes the image take up full width of the card */
     border-radius: 8px; /*rounded corners for the image */
@@ -122,6 +132,20 @@ h1 {
     background-color: #218838;/*darker green on hover*/ 
 }
 
+body.dark-mode.movie-card {
+    background-color: #444; /*dark background color for movie cards in dark mode*/
+    color: white; /*white text color in dark mode*/
+}
+
+body.dark-mode#movie-search,
+body.dark-mode#search-btn {
+    background-color: #555;/*dark background for search input and button in dark mode*/
+    color: white; /*white text color in dark mode*/
+}
+
+.corousel-inner img{
+    width: 100%; /*makes images take up the full width of the carousel*/
+}
 @media screen and (max-width: 768px){
     .movie-card{
         max-width: 100%; /*allow the card to take full width*/
