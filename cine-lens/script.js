@@ -1,21 +1,33 @@
-const omdbApikey = 'your_omdb_api_key';
+const traktApiKey = 'd9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05';
 
 $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
     if (query === "") return;
 
-    $.getJSON(`https://www.omdbapi.com/?apikey=${omdbApikey}&s=${query}`,function(data) {
-        if(data.Response === "True") {
-            displayMovies(data.Search);  
-        
-    } else {
+
+    $.ajax({
+        url:`https://api.trakt.tv/search/movie%60,`,
+        method: 'GET',
+        headers:{
+            'Content-Type':'application/json',
+            'trakt-api-version':'2',
+            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+        },
+        data: {
+            query: query
+        },
+        success: function(data){
+            if(data.length> 0) {
+                displayMovies(data);
+            } else {
         $('#movie-results').html('<p>No movies found. Please try again.</p>');
-
-    }
-}).fail(function() {
-     $('#movie-results').html('<p>Error fetching data. Please try again later. </p>');
-
-});
+            }
+        
+            },
+error: function(){
+    $('#movie-results').html('<p>Error fetching data. Please try again later.</p>');
+}
+    });
 });
 
 function displayMovies(movies) {
@@ -23,10 +35,10 @@ function displayMovies(movies) {
     movies.forEach(movie => {
         const movieCard = `
         <div class="col-md-3 col-sm-6 col-12 movie-card">
-        <img src="${movie.Poster}" alt="${movie.Title}">
-        <h3>${movie.Title}</h3>
-        <p>${movie.year}</p>
-        <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.omdbID}')">View Details</button>
+        <img src="${movie.movie.images.poster}" alt="${movie.movie.title}">
+        <h3>${movie.movie.title}</h3>
+        <p>${movie.movie.year}</p>
+        <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.movie.ids.trakt}')">View Details</button>
         </div>
         `;
         $('#movie-results').append(movieCard);
@@ -34,27 +46,26 @@ function displayMovies(movies) {
     });
 }
 
-function getMovieDetails(omdbID) {
-    $.getJSON(`https://www.omdbapi.com/?apikey=${omdbApikey}&i=${omdbID}`, function(data){
-        if(data.Response === "True") {
-            showMovieDetails(data);
-
-        }
-    }).fail(function() {
-       $('#movie-details').html('<p>Error fetching movie details. Please try again later.</p>');
-
+function getMovieDetails(traktID) {
+   
+    $.ajax({
+        url:`https://api.trakt.tv/search/movies/${traktID},`,
+        method: 'GET',
+        headers:{
+            'Content-Type':'application/json',
+            'trakt-api-version':'2',
+            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+        },
+       
+        success: function(data){
+           showMovieDetails(data);
+            },
+error: function(){
+    $('#movie-results').html('<p>Error fetching movie details. Please try again later.</p>');
+}
     });
 
-    const omdbUrl = `https://omdbapi-com/${omdbApikey}/title/${omdbID}`;
-    fetch(omdbUrl)
-    .then((response) => response.json())
-    .then((data) =>{
-         console.log("OMDB Movie Deatils:",data);
-
-})
-    .catch((error) => console.log(error));
-
-}
+ 
 
 function showMovieDetails(movie) {
     $('#movie-details').show().html(`
