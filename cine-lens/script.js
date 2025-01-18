@@ -69,48 +69,63 @@ error: function(){
 
 function showMovieDetails(movie) {
     $('#movie-details').show().html(`
-        <img src="${movie.poster}"alt="${movie.Title}">
-        <h2>${movie.title} (${movie.Year})<h2>
-        <p><strong>Genre:</strong>${movie.Genre}</p>
-        <p><strong>Rating:</strong>${movie.imdbRating}</p>
-        <p><strong>Plot:</strong>${movie.Poster}</p>
-        <button onclick="toggleFavorite('${movie.omdbID}','${movie.Title}')"class="btn btn-outline-secondary">Add to Favorites</button>
+        <img src="${movie.images.poster}"alt="${movie.title}">
+        <h2>${movie.title} (${movie.year})<h2>
+        <p><strong>Genre:</strong>${movie.genres.join(',')}</p>
+        <p><strong>Rating:</strong>${movie.rating}</p>
+        <p><strong>Plot:</strong>${movie.overview}</p>
+        <button onclick="toggleFavorite('${movie.ids.trakt}','${movie.title}')"class="btn btn-outline-secondary">Add to Favorites</button>
 
     `);
 }
 
-function toggleFavorite(omdbID, title) {
+function toggleFavorite(traktID, title) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) ||[];
-    if(favorites.some(movie => movie.omdbID === omdbID)){
-        favorites = favorites.filter(movie => movie.omdbID !== omdbID);
+    if(favorites.some(movie => movie.traktID === traktID)){
+        favorites = favorites.filter(movie => movie.traktID !== traktID);
         localStorage.setItem('favorites', JSON.stringify(favorites));
     } else {
-        favorites.push({omdbID, title});
+        favorites.push({traktID, title});
         localStorage.setItem('favorites',JSON.stringify(favorites));
 
     }
 }
-function getPersonDetails(personid){
-    const omdbUrl = `https://omdbapi.com/${omdbApikey}/Name/${personid}`;
-    fetch(omdbUrl)
-    .then((response) => response.json())
-    .then((data) =>{
-         console.log("OMDB Person Details:",data);
-
-})
-    .catch((error) => console.log(error));
-
+function getMovieCrew (traktID) {
+    $.ajax({
+        url:`https://api.trakt.tv/search/movies/${traktID}/people`,
+        method: 'GET',
+        headers:{
+            'Content-Type':'application/json',
+            'trakt-api-version':'2',
+            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+        },
+       
+        success: function(data){
+           console.log("Trakt Movie Crew Details", data);
+            },
+error: function(){
+    console.log('Error fetching crew details.');
+}
+    });
 }
 
 function searchMovie(query) {
-    const omdbUrl = `https://omdbapi.com/${omdbApikey}/Search/${query}`;
-    fetch(omdbUrl)
-    .then((response) => response.json())
-    .then((data) =>{
-         console.log("OMDB Search Results:",data);
-
-})
-    .catch((error) => console.log(error));
-
+    $.ajax({
+        url:`https://api.trakt.tv/search/movie`,
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json',
+            'trakt-api-version':'2',
+            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+        },
+       data: {
+        query: query
+       },
+        success: function(data){
+           console.log("Trakt Search Results: ", data);
+           displayMovies(data);
+            },
+error: function(){
+    console.log('Error searching for movies.');
 }
-
+});
