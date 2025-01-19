@@ -11,7 +11,7 @@ transition: background-color 0.3 ease, color 0.3s ease; /* add transition*/
 background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(./images/harry-potter-image.jpg.jpg); /*add a background image*/
 background-repeat: no-repeat; /*makes sure the image does not repeat*/
 background-size: cover; /*makes sure the image takes full width of the page*/
-
+height: 500px
 }
 
 

@@ -79,7 +79,7 @@ error: function(){
 
 function showMovieDetails(movie) {
     const genres = Array.isArray(movie.genres) && movie.genres.length > 0 ? movie.genres.join(',') : 'No genres available';
-    const poster = movie.images ? movie.images.poster : './assets/images/default-image.jpg';
+    const poster = movie.images ? movie.images.poster : './assets/images/defualt-image.jpg';
     $('#movie-details').show().html(`
         <img src="${poster}"alt="${movie.title}">
         <h2>${movie.title} (${movie.year})</h2>
