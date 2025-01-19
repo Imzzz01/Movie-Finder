@@ -8,13 +8,28 @@ body {
     font-family: Arial, sans-serif; /*set a clean, sans- serif font */
 background-color: #f0f0f0;/* set background color for my page*/
 transition: background-color 0.3 ease, color 0.3s ease; /* add transition*/
-
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(./images/harry-potter-image.jpg.jpg);
+background-repeat: no-repeat;
+background-size: cover;
 
 }
 
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 800px;
+    z-index: -1;
+}
+
+span {
+    color: #0056b3;
+}
 body.dark-mode {
     background-color: #333; /*set dark mode bg color*/
     color: #fff;
+    
 
 } 
 .container {
@@ -25,7 +40,7 @@ margin: 0 auto; /*centers the container horizontally */
 
 h1 {
     font-size: 36px; /*larger font size for the header */
-    color: #333; /*set text color */
+    color: #fcfcfc; /*set text color */
     text-align: centers; /* centers the header text*/
     margin-bottom: 30px;/*adds space below the header */
 }
