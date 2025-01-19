@@ -4,14 +4,16 @@ $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
     if (query === "") return;
 
-
+searchMovie(query);
+});
+function searchMovie(query) {
     $.ajax({
-        url:`https://api.trakt.tv/search/movie%60,`,
+        url:`https://api.trakt.tv/search/movie`,
         method: 'GET',
         headers:{
             'Content-Type':'application/json',
             'trakt-api-version':'2',
-            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
         },
         data: {
             query: query
@@ -28,14 +30,15 @@ error: function(){
     $('#movie-results').html('<p>Error fetching data. Please try again later.</p>');
 }
     });
-});
+};
 
 function displayMovies(movies) {
     $('#movie-results').empty();
     movies.forEach(movie => {
+        const poster = movie.movie.images ? movie.movie.images.poster: 'default-image.jpg';
         const movieCard = `
         <div class="col-md-3 col-sm-6 col-12 movie-card">
-        <img src="${movie.movie.images.poster}" alt="${movie.movie.title}">
+        <img src="${poster}" alt="${movie.movie.title}">
         <h3>${movie.movie.title}</h3>
         <p>${movie.movie.year}</p>
         <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.movie.ids.trakt}')">View Details</button>
@@ -49,28 +52,34 @@ function displayMovies(movies) {
 function getMovieDetails(traktID) {
    
     $.ajax({
-        url:`https://api.trakt.tv/search/movies/${traktID},`,
+        url:`https://api.trakt.tv/movies/${traktID}`,
         method: 'GET',
         headers:{
             'Content-Type':'application/json',
             'trakt-api-version':'2',
-            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
+        
         },
-       
+    
         success: function(data){
            showMovieDetails(data);
-            },
+          
+        },
+    
+    
 error: function(){
     $('#movie-results').html('<p>Error fetching movie details. Please try again later.</p>');
 }
     });
 
- 
+}
 
 function showMovieDetails(movie) {
+    const genres = movie.genres && movie.genres.length ? movie.genres.join(',') : 'N/A';
+    const poster = movie.images ? movie.images.poster : 'default-image.jpg';
     $('#movie-details').show().html(`
-        <img src="${movie.images.poster}"alt="${movie.title}">
-        <h2>${movie.title} (${movie.year})<h2>
+        <img src="${poster}"alt="${movie.title}">
+        <h2>${movie.title} (${movie.year})</h2>
         <p><strong>Genre:</strong>${movie.genres.join(',')}</p>
         <p><strong>Rating:</strong>${movie.rating}</p>
         <p><strong>Plot:</strong>${movie.overview}</p>
@@ -97,7 +106,7 @@ function getMovieCrew (traktID) {
         headers:{
             'Content-Type':'application/json',
             'trakt-api-version':'2',
-            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
+            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
         },
        
         success: function(data){
@@ -109,23 +118,3 @@ error: function(){
     });
 }
 
-function searchMovie(query) {
-    $.ajax({
-        url:`https://api.trakt.tv/search/movie`,
-        method: 'GET',
-        headers: {
-            'Content-Type':'application/json',
-            'trakt-api-version':'2',
-            'trakt-api-key':d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05
-        },
-       data: {
-        query: query
-       },
-        success: function(data){
-           console.log("Trakt Search Results: ", data);
-           displayMovies(data);
-            },
-error: function(){
-    console.log('Error searching for movies.');
-}
-});
