@@ -8,27 +8,19 @@ body {
     font-family: Arial, sans-serif; /*set a clean, sans- serif font */
 background-color: #f0f0f0;/* set background color for my page*/
 transition: background-color 0.3 ease, color 0.3s ease; /* add transition*/
-background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(./images/harry-potter-image.jpg.jpg);
-background-repeat: no-repeat;
-background-size: cover;
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url(./images/harry-potter-image.jpg.jpg); /*add a background image*/
+background-repeat: no-repeat; /*makes sure the image does not repeat*/
+background-size: cover; /*makes sure the image takes full width of the page*/
 
 }
 
-#video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 800px;
-    height: 800px;
-    z-index: -1;
-}
 
 span {
-    color: #0056b3;
+    color: #0056b3; /* set span color to blue*/
 }
 body.dark-mode {
     background-color: #333; /*set dark mode bg color*/
-    color: #fff;
+    color: #fff; /*set text color*/
     
 
 } 
