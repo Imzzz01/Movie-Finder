@@ -19,6 +19,7 @@ function searchMovie(query) {
             query: query
         },
         success: function(data){
+            console.log('Movie Search Response:', data);
             if(data.length> 0) {
                 displayMovies(data);
             } else {
@@ -35,7 +36,8 @@ error: function(){
 function displayMovies(movies) {
     $('#movie-results').empty();
     movies.forEach(movie => {
-        const poster = movie.movie.images ? movie.movie.images.poster: 'default-image.jpg';
+        const poster = movie.movie.images && movie.movie.images.poster ? movie.movie.images.poster : './assets/images/default-image.jpg';
+        console.log('Movie Poster:', poster);
         const movieCard = `
         <div class="col-md-3 col-sm-6 col-12 movie-card">
         <img src="${poster}" alt="${movie.movie.title}">
@@ -50,7 +52,7 @@ function displayMovies(movies) {
 }
 
 function getMovieDetails(traktID) {
-   
+   console.log(`Fetching details for movie with traktID: ${traktID}`);
     $.ajax({
         url:`https://api.trakt.tv/movies/${traktID}`,
         method: 'GET',
@@ -60,8 +62,9 @@ function getMovieDetails(traktID) {
             'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
         
         },
-    
+        
         success: function(data){
+            console.log('Movie Details Response:', data);
            showMovieDetails(data);
           
         },
@@ -76,7 +79,7 @@ error: function(){
 
 function showMovieDetails(movie) {
     const genres = movie.genres && movie.genres.length ? movie.genres.join(',') : 'N/A';
-    const poster = movie.images ? movie.images.poster : 'default-image.jpg';
+    const poster = movie.images ? movie.images.poster : './assets/images/default-image.jpg';
     $('#movie-details').show().html(`
         <img src="${poster}"alt="${movie.title}">
         <h2>${movie.title} (${movie.year})</h2>
