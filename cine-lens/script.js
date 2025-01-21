@@ -1,5 +1,28 @@
 const traktApiKey = 'd9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05';
 
+$(window).on('load', function(){
+    $('#loading-screen').fadeOut(500);
+    $('body').css('opacity', 1);
+});
+
+
+$('#dark-mode-toggle').click(function(){
+    $('body').toggleClass('dark-mode');
+    if($('body').hasClass('dark-mode')){
+        $('#dark-mode-toggle').html('Light Mode');
+
+    } else {
+        $('#dark-mode-toggle').html('Dark Mode');
+
+    }
+});
+
+
+
+
+
+
+
 $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
     if (query === "") return;
