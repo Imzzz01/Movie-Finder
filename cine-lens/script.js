@@ -49,14 +49,14 @@ error: function(){
 function displayMovies(movies) {
     $('#movie-results').empty();
     movies.forEach(movie => {
-        const poster = movie.movie.images && movie.movie.images.poster ? movie.movie.images.poster : './assets/images/default-image.jpg';
+        const poster = movie.Poster!== "N/A" ? movie.Poster : './assets/images/default-image.jpg';
 
         const movieCard = `
         <div class="col-md-3 col-sm-6 col-12 movie-card" data-aos="zoom-in">
-        <img src="${poster}" alt="${movie.movie.title}">
-        <h3>${movie.movie.title}</h3>
-        <p>${movie.movie.year}</p>
-        <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.movie.ids.trakt}')">View Details</button>
+        <img src="${poster}" alt="${movie.Title}">
+        <h3>${movie.Title}</h3>
+        <p>${movie.Year}</p>
+        <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.imdbID}')">View Details</button>
         </div>
         `;
         $('#movie-results').append(movieCard);
@@ -98,44 +98,33 @@ function showMovieDetails(movie) {
         <p><strong>Rating:</strong>${movie.imdbRating}</p>
         <p><strong>Plot:</strong>${movie.Plot}</p>
         <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.imdbID}','${movie.Title}')">
-        ${isFavorite ? 'Remove from Favorites': 'Add to Favorites'} </button>
+        ${isFavorite(movie.imdbID) ? 'Remove from Favorites': 'Add to Favorites'} </button>
 
     `);
 }
 
-function toggleFavorite(imdbID, Title) {
+function toggleFavorite(imdbID, title) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) ||[];
-    const movieExists = favorites.some(movie => movie.traktID === traktID);
+    const movieExists = favorites.some(movie => movie.imdbID === imdbID);
        
     if(movieExists) {
-        favorites = favorites.filter(movie => movie.traktID !== traktID);
+        favorites = favorites.filter(movie => movie.imdbID !== imdbID);
         Swal.fire('Removed!',`${title} has been removed from your favorites.`,'info');
-        $('button[data-traktid = "${traktID}"]').text('Add to Favorites');
+       
     }else {
         
-        favorites.push({traktID, title});
+        favorites.push({imdbID, title});
         Swal.fire('Added!',`${title} has been added to your favorites.`, 'success');
-        $('button[data-traktid = "${traktID}"]').text('Remove from Favorites');
+       
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
 
 }
-function getMovieCrew (traktID) {
-    $.ajax({
-        url:`https://api.trakt.tv/search/movies/${traktID}/people`,
-        method: 'GET',
-        headers:{
-            'Content-Type':'application/json',
-            'trakt-api-version':'2',
-            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
-        },
-       
-        success: function(data){
-           console.log("Trakt Movie Crew Details", data);
-            },
-error: function(){
-    console.log('Error fetching crew details.');
+
+function isFavorite(imdbID) {
+         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+         return favorites.some(movie => movie.imdbID === imdbID);
 }
-    });
-}
+
+
 
