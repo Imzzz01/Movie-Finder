@@ -1,4 +1,4 @@
-const traktApiKey = 'd9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05';
+const OMDbApiKey = '2fee485b';
 
 $(document).ready(function(){
     AOS.init();
@@ -24,20 +24,17 @@ $('#light-mode-toggle').click(function() {
 
 function searchMovie(query) {
     $.ajax({
-        url:`https://api.trakt.tv/search/movie`,
+        url:`https://www.omdbapi.com/`,
         method: 'GET',
-        headers:{
-            'Content-Type':'application/json',
-            'trakt-api-version':'2',
-            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
+        data:{
+             s: query,
+             apikey: '2fee485b'
         },
-        data: {
-            query: query
-        },
+
         success: function(data){
             console.log('Movie Search Response:', data);
-            if(data.length> 0) {
-                displayMovies(data);
+            if(data.Response === "True") {
+                displayMovies(data.Search);
             } else {
         $('#movie-results').html('<p>No movies found. Please try again.</p>');
             }
@@ -69,20 +66,18 @@ function displayMovies(movies) {
 
 function getMovieDetails(traktID) {
    console.log(`Fetching details for movie with traktID: ${traktID}`);
-    $.ajax({
-        url:`https://api.trakt.tv/movies/${traktID}`,
-        method: 'GET',
-        headers:{
-            'Content-Type':'application/json',
-            'trakt-api-version':'2',
-            'trakt-api-key':'d9cc9a51e007b0f3fca4b168ff6da92df12b52fe767e113e8c753bed5d340a05'
-        
-        },
-        
-        success: function(data){
-            console.log('Movie Details Response:', data);
-           showMovieDetails(data);
-          
+   $.ajax({
+    url:`https://www.omdbapi.com/`,
+    method: 'GET',
+    data:{
+         i: imdbID,
+         apikey: '2fee485b'
+    },
+
+    success: function(data){
+        console.log('Movie Details Response:', data);
+        showMovieDetails(data);
+    
         },
     
     
@@ -94,21 +89,21 @@ error: function(){
 }
 
 function showMovieDetails(movie) {
-    const genres = movie.genres ? movie.genres.join(',') : 'No genres available';
-    const poster = movie.images ? movie.images.poster : './assets/images/defualt-image.jpg';
+   
+    const poster = movie.Poster !== "N/A" ? movie.Poster : './assets/images/defualt-image.jpg';
     $('#movie-details').html(`
-        <img src="${poster}"alt="${movie.title}" style="width: 300px; border-radius: 8px;">
-        <h2>${movie.title} (${movie.year})</h2>
-        <p><strong>Genre:</strong>${movie.genres.join(',')}</p>
-        <p><strong>Rating:</strong>${movie.rating}</p>
-        <p><strong>Plot:</strong>${movie.overview}</p>
-        <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.ids.trakt}','${movie.title}')">
+        <img src="${poster}"alt="${movie.Title}" style="width: 300px; border-radius: 8px;">
+        <h2>${movie.Title} (${movie.Year})</h2>
+        <p><strong>Genre:</strong>${movie.Genre}</p>
+        <p><strong>Rating:</strong>${movie.imdbRating}</p>
+        <p><strong>Plot:</strong>${movie.Plot}</p>
+        <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.imdbID}','${movie.Title}')">
         ${isFavorite ? 'Remove from Favorites': 'Add to Favorites'} </button>
 
     `);
 }
 
-function toggleFavorite(traktID, title) {
+function toggleFavorite(imdbID, Title) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) ||[];
     const movieExists = favorites.some(movie => movie.traktID === traktID);
        
