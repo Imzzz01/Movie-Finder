@@ -21,8 +21,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js" integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    <!--Lottie.js cdn-->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/11.1.0/firebase-app.js" integrity="sha512-fkWvBa/U47QFAJMNpxi5QiLxbych1SGNUISPLXqfkxrQedwp/Fdvm90BL1j2+dlBRDoQW8AG9ieoml2rsNetUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/11.1.0/firebase-auth.min.js" integrity="sha512-1WvNc6vmbRNdFUBwZztWfJBv1m66SkSBGTiFPLWPKmYbX+iHsKODKCYBNkSz3gaV8/YUga7AF0BwCqTRogN/Bg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   
    <link rel="stylesheet" href="assets/style.css">
 
 
@@ -31,14 +30,10 @@
 </head>
 <body>
     
-    <div id="loading-screen" class="loading-screen">
-        <div class="spinner"></div>
-    </div>
+   
     <div class="container mt-5">
-        <h1 class="animate__animated animate__fadein text-center">Cine<span>Lens</span></h1>
-        <button id="light-mode-toggle" class="btn btn-light mb-4">Light Mode</button>
-        <button id="dark-mode-toggle" class="btn btn-dark mb-4">Dark Mode</button>
-    <!--Search section-->
+        <h1 class="text-center">Cine<span>Lens</span></h1>
+       
     <div class="row mb-4">
         <div class="col-md-8 col-12">
             <input type="text" id="movie-search" class="form-control" placeholder="Search for a movie">
@@ -50,14 +45,57 @@
     </div>
     
 <!--Movie Results section-->
-    <div id="movie-results" class="row"></div>
+    <div class="row" id="movie-results"></div>
    
 <!--Movie Details section-->
 <div id="movie-details" class="mt-4 text-center"></div>
 
+<!--Movie carousel -->
+<div class="swiper-container">
+    <div class="swiper-wrapper" id="movie-carousel"></div>
+</div>
+
+<div class="social-share">
+    
+    <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20movie!" target="_blank">Share on Twitter</a>
+</div>
+
+<button id="light-mode-toggle" class="btn btn-light">Light Mode</button>
+<button id="dark-mode-toggle" class="btn btn-dark">Dark Mode</button>
+</div>
+
+<div id="auth-container">
+    <h2>Login / Signup</h2>
+    <form id="login-form">
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <input type="password" id="password" placeholder="Enter Password" required>
+    <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <button id="signout-btn" class="btn btn-danger" style="display: none;">Sign Out</button>
 </div>
 
 
+
+    <script type="module">
+     
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyDles8YB5oMQudbw8_CytxqzpsCrGo9lGg",
+        authDomain: "cine-lens.firebaseapp.com",
+        projectId: "cine-lens",
+        storageBucket: "cine-lens.firebasestorage.app",
+        messagingSenderId: "856174545329",
+        appId: "1:856174545329:web:f2c2fe0b5d81f2a2c51590",
+        measurementId: "G-Q63RJB0TRX"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
