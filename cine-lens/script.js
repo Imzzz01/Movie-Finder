@@ -8,7 +8,16 @@ $('#login-form').submit(function (e) {
     const password = $('#password').val();
 
     signInWithEmailAndPassword(auth, email, password)
-    .then((user)
+    .then((userCredential) => {
+        Swal.fire('Welcome!', 'You have successfully logged in.', 'success');
+        $('#auth-container').hide();
+        $('#signout-btn').show();
+    })
+
+    .catch((error) => {
+        Swal.fire('Error', error.message, 'error');
+    });
+});
     $('#signout-btn').click(function(){
         signOut(auth)
         .then(() => {
@@ -90,7 +99,7 @@ function displayMovies(movies) {
 }
 
 function getMovieDetails(imdbID) {
-   console.log(`Fetching details for movie with traktID: ${traktID}`);
+ 
    $.ajax({
     url:`https://www.omdbapi.com/`,
     method: 'GET',
