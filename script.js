@@ -69,11 +69,11 @@ function displayMovies(movies) {
         <button class="btn btn-outline-primary w-100" onclick="getMovieDetails('${movie.imdbID}')">View Details</button>
         </div>
         `;
+
         $('#movie-results').append(movieCard);
 
     });
 }
-
 function getMovieDetails(imdbID) {
  
    $.ajax({
@@ -109,9 +109,22 @@ function showMovieDetails(movie) {
         <p><strong>Plot:</strong>${movie.Plot}</p>
         <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.imdbID}','${movie.Title}')">
         ${isFavorite(movie.imdbID) ? 'Remove from Favorites': 'Add to Favorites'} </button>
+   <br><br>
+        <button class="btn btn-primary" onclick="backToMovies()">Back to Movies</button>     
+        </div>
 
     `);
-}
+        $('#movie-results').hide();
+        $('#movie-details').html(movieDetailsHtml);
+       
+    
+    }
+    function backToMovies() {
+        $('#movie-results').show();
+        $('#movie-details').empty();
+    }
+    
+
 
 function toggleFavorite(imdbID, title) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) ||[];
