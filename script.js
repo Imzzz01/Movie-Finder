@@ -25,6 +25,14 @@ $ (document).ready(function() {
 });
 });
 
+updateFavoriteCount();
+
+
+function updateFavoriteCount() {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    $('#favorites-count').text(favorites.length);
+}
+
 $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
     if (query !== "") {
@@ -107,7 +115,7 @@ function showMovieDetails(movie) {
         <p><strong>Genre:</strong>${movie.Genre}</p>
         <p><strong>Rating:</strong>${movie.imdbRating}</p>
         <p><strong>Plot:</strong>${movie.Plot}</p>
-        <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.imdbID}','${movie.Title}')">
+        <button class="btn btn-outline-secondary" onclick="toggleFavorite('${movie.imdbID}', '${movie.Title.replace(/'/g, "\\'")}')">
         ${isFavorite(movie.imdbID) ? 'Remove from Favorites': 'Add to Favorites'} </button>
    <br><br>
         <button class="btn btn-primary" onclick="backToMovies()">Back to Movies</button>     
@@ -115,7 +123,7 @@ function showMovieDetails(movie) {
 
     `);
         $('#movie-results').hide();
-        $('#movie-details').html(movieDetailsHtml);
+        $('#movie-details').html();
        
     
     }
