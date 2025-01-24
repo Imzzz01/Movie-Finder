@@ -1,60 +1,18 @@
-import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut}from'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
-
-const auth = getAuth();
-
-$('#login-form').submit(function (e) {
-    e.preventDefault();
-    const email = $('#email').val();
-    const password = $('#password').val();
-
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        Swal.fire('Welcome!', 'You have successfully logged in.', 'success');
-        $('#auth-container').hide();
-        $('#signout-btn').show();
-    })
-
-    .catch((error) => {
-        Swal.fire('Error', error.message, 'error');
-    });
-});
-    $('#signout-btn').click(function(){
-        signOut(auth)
-        .then(() => {
-            $('#auth-container').show();
-            $('#signout-btn').hide();
-            Swal.fire('Logged out!', 'You have successfully logged out.', 'info');
-        })
-        .catch((error) => {
-            Swal.fire('Error', error.message, 'error');
-        });
-    });
-
-
 
 const OMDbApiKey = '2fee485b';
 
-$(document).ready(function(){
-    AOS.init();
-
+$ (document).ready(function() {
+$('#dark-mode-toggle').click(function() {
+    $('body').removeClass('light-mode').addClass('dark-mode');
+});  
+}); 
 
 $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
-    if (query === "") return;
-
-searchMovie(query);
+    if (query !== "") {
+          searchMovie(query);
+}
 });
-
-
-   $('#light-mode-toggle').click(function() {
-    $('body').addClass('dark-mode').removeClass('light-mode');
-    
-});
-$('#dark-mode-toggle').click(function() {
-    $('body').removeClass('light-mode').addClass('dark-mode');
-});   
-});
-
 
 function searchMovie(query) {
     $.ajax({
@@ -159,10 +117,3 @@ function isFavorite(imdbID) {
          let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
          return favorites.some(movie => movie.imdbID === imdbID);
 }
-
-var swiper = new Swiper('.swiper-container', {
-    slidesPerView: 3,
-    spaceBetween: 10,
-    loop: true
-
-});

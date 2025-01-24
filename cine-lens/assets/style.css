@@ -10,30 +10,16 @@ background-color: #f0f0f0;/* set background color for my page*/
 
 }
 
-
 span {
     color: #0056b3; /* set span color to blue*/
 }
-body.dark-mode {
-    background-color: #333; /*set dark mode bg color*/
-    color: #fff; /*set text color*/
-    
-} 
-body.light-mode {
-    background-color: #333;
-    color: #ffffff;
-}
 
-.container {
-max-width: 1200px; /*maximum width of the container */
-margin: 0 auto; /*centers the container horizontally */
 
-}
 
 h1 {
     font-size: 36px; /*larger font size for the header */
-    color: #fcfcfc; /*set text color */
-    text-align: centers; /* centers the header text*/
+    color: #333; /*set text color */
+    text-align: center; /* centers the header text*/
     margin-bottom: 30px;/*adds space below the header */
 }
 
@@ -65,37 +51,27 @@ h1 {
 
 #movie-results {
     display: flex; /* using flexbox for the grid layout*/
+    flex-wrap: wrap;
     gap: 20px; /*adds space between the cards */
     justify-content: center; /*centers the cards in the container */
-    margin-top: 20px; /* adds space above the movie cards */
+   
 }
 
 .movie-card {
-   
-    text-align: center; /*centers the text inside the card */
-    margin-bottom: 20px;/* adds space below each card*/
-    transition: transform 0.3s ease-in-out; /*add transition*/
+    width: 220px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease; /*add transition*/
 
 }
 
-.movie-card:hover {
-    transform: scale(1.05); /*slightly enlarge the card when hovered*/
-    
-}
-
-.swiper-container {
-    width: 100%;
-    height: 300px;
-}
-
-.swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 .movie-card img {
     width: 100%; /* makes the image take up full width of the card */
     border-radius: 8px; /*rounded corners for the image */
+    object-fit: cover;
 }
 
 .movie-card h3 {
@@ -109,56 +85,67 @@ h1 {
     color: #555; /* medium gray color for the text*/
 }
 
+
 #movie-details {
     margin-top: 40px; /* adds space above the movie details*/
     text-align: center; /* centers the text inside the movie details section*/
+    padding: 20px;
+   
+    border-radius: 8px;
+    
 }
 
 .movie-details img{
     width: 300px; /* sets a fixed width for the image*/
+    height: auto;
     border-radius: 8px; /* rounded corners for the image*/
     margin-bottom: 20px; /* adds space below the image*/
+
 }
 
 .movie-details h2 {
-    margin-top: 10px; /* adds space above the movie title*/
-    font-size: 24px; /*larger font size for the title */
+    margin-bottom: 15px; /* adds space below the movie title*/
+    font-size: 28px; /*larger font size for the title */
     color: #333;
 }
 
 .movie-details p {
     font-size: 16px; /* medium font size for paragraph text*/
     color: #555; /* medium gray color for text */
+    margin-bottom: 15px;
+    line-height: 1.6;
+
 }
 
 .movie-details button {
-    padding:10px 20px; /*adds padding to the button*/
+    padding: 12px 25px; /*adds padding to the button*/
     background-color: #28a745; /*green background color*/
     color: white; /*white text color*/
     border: none; /*no border*/
     border-radius: 5px; /*slightly rounded corners*/
     cursor: pointer;/*pointer cursor to indicate clickable*/
-    
+    font-size: 16px;
+    transition: background-color 0.3s;
 }  
 
 .movie-details button:hover{
     background-color: #218838;/*darker green on hover*/ 
 }
 
-body.dark-mode.movie-card {
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+body.dark-mode .movie-card {
     background-color: #444; /*dark background color for movie cards in dark mode*/
-    color: white; /*white text color in dark mode*/
+   
 }
 
-body.dark-mode#movie-search,
-body.dark-mode#search-btn {
+body.dark-mode#movie-search {
     background-color: #555;/*dark background for search input and button in dark mode*/
     color: white; /*white text color in dark mode*/
 }
 
-.corousel-inner img{
-    width: 100%; /*makes images take up the full width of the carousel*/
-}
 @media screen and (max-width: 768px){
     .movie-card{
         max-width: 100%; /*allow the card to take full width*/
