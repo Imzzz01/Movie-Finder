@@ -2,10 +2,28 @@
 const OMDbApiKey = '2fee485b';
 
 $ (document).ready(function() {
-$('#dark-mode-toggle').click(function() {
-    $('body').removeClass('light-mode').addClass('dark-mode');
-});  
-}); 
+
+    if(localStorage.getItem('dark-mode')==='enabled'){
+        $('body').addClass('dark-mode');
+        $('#dark-mode-toggle').text('Light Mode');
+
+    } else {
+        $('#dark-mode-toggle').text('dark-mode');
+    } 
+
+    $('#dark-mode-toggle').click(function() {
+    $('body').toggleClass('dark-mode');
+
+    if ($('body').hasClass('dark-mode')) {
+        $('#dark-mode-toggle').text('Light Mode');
+        localStorage.setItem('dark-mode','enabled');
+
+    } else {
+        $('#dark-mode-toggle').text('dark-mode');
+        localStorage.removeItem('dark-mode');
+    }
+});
+});
 
 $('#search-btn').click(function () {
     const query = $('#movie-search').val().trim();
