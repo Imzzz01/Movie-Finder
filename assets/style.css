@@ -1,0 +1,159 @@
+* { /* Reseting margin padding and box-sizing for all elements*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /*set a clean, sans- serif font */
+background-color: #f0f0f0;/* set background color for my page*/
+
+}
+
+span {
+    color: #0056b3; /* set span color to blue*/
+}
+
+
+
+h1 {
+    font-size: 36px; /*larger font size for the header */
+    color: #333; /*set text color */
+    text-align: center; /* centers the header text*/
+    margin-bottom: 30px;/*adds space below the header */
+}
+
+#movie-search {
+    padding: 10px; /* adds padding inside the input field*/
+    font-size: 16px; /*adjusts the font size inside the input field */
+    width: 100%; /*sets width to full */
+    border-radius: 5px; /*slightly rounded corners */
+    border: 1px solid #ccc; /*light gray border */
+    
+
+} 
+
+#search-btn {
+    padding: 10px; /*adds padding inside the button */
+    font-size: 16px; /*sets the font size for the button text */
+    background-color: #007bff; /*blue background for the button */
+    color: white; /*white text color */
+    border: none; /*no border */
+    border-radius: 5px; /* slightly rounded corners*/
+    cursor: pointer; /*changes cursor to pointer to indicate it's clickable */
+
+}
+
+#search-btn:hover {
+    background-color: #0056b3; /*darker blue on hover */
+
+}
+
+#movie-results {
+    display: flex; /* using flexbox for the grid layout*/
+    flex-wrap: wrap;
+    gap: 20px; /*adds space between the cards */
+    justify-content: center; /*centers the cards in the container */
+   
+}
+
+.movie-card {
+    width: 220px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease; /*add transition*/
+
+}
+
+.movie-card img {
+    width: 100%; /* makes the image take up full width of the card */
+    border-radius: 8px; /*rounded corners for the image */
+    object-fit: cover;
+}
+
+.movie-card h3 {
+    font-size: 18px; /*sets font size for the movie title  */
+    margin: 10px 0; /* adds space above and below the title*/
+
+}
+
+.movie-card p {
+    font-size: 14px; /* smaller font size for the year*/
+    color: #555; /* medium gray color for the text*/
+}
+
+
+#movie-details {
+    margin-top: 40px; /* adds space above the movie details*/
+    text-align: center; /* centers the text inside the movie details section*/
+    padding: 20px;
+   
+    border-radius: 8px;
+    
+}
+
+.movie-details img{
+    width: 300px; /* sets a fixed width for the image*/
+    height: auto;
+    border-radius: 8px; /* rounded corners for the image*/
+    margin-bottom: 20px; /* adds space below the image*/
+
+}
+
+.movie-details h2 {
+    margin-bottom: 15px; /* adds space below the movie title*/
+    font-size: 28px; /*larger font size for the title */
+    color: #333;
+}
+
+.movie-details p {
+    font-size: 16px; /* medium font size for paragraph text*/
+    color: #555; /* medium gray color for text */
+    margin-bottom: 15px;
+    line-height: 1.6;
+
+}
+
+.movie-details button {
+    padding: 12px 25px; /*adds padding to the button*/
+    background-color: #28a745; /*green background color*/
+    color: white; /*white text color*/
+    border: none; /*no border*/
+    border-radius: 5px; /*slightly rounded corners*/
+    cursor: pointer;/*pointer cursor to indicate clickable*/
+    font-size: 16px;
+    transition: background-color 0.3s;
+}  
+
+.movie-details button:hover{
+    background-color: #218838;/*darker green on hover*/ 
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+body.dark-mode .movie-card {
+    background-color: #444; /*dark background color for movie cards in dark mode*/
+   
+}
+
+body.dark-mode#movie-search {
+    background-color: #555;/*dark background for search input and button in dark mode*/
+    color: white; /*white text color in dark mode*/
+}
+
+@media screen and (max-width: 768px){
+    .movie-card{
+        max-width: 100%; /*allow the card to take full width*/
+    }
+    #movie-search{
+        font-size: 14px;
+    }
+    #search-btn {
+        font-size: 14px;
+    }
+}
