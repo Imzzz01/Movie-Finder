@@ -1,5 +1,16 @@
 
 const OMDbApiKey = '2fee485b';
+$ (document).ready(function() {
+   loadRecommendedMovies();
+});
+
+function loadRecommendedMovies() {
+    const recommendedMovies = [
+        {"Title":"Harry Potter and the Deathly Hallows: Part 2", poster: 
+    ]
+}
+
+
 
 $ (document).ready(function() {
 
