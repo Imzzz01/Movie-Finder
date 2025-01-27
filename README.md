@@ -1,4 +1,4 @@
-#README: CineLens (localhost:5500) [cinelens]
+#README: CineLens (localhost:5500) [CineLens]
 
 Purpose of project 
 The goal of CineLens is to create a user-friendly, interactive movie discovery platform that offers a variety of features inspiring popular movie-related websites like IMDb, trakt.tv etc. The platform will not only help users find and explore movies, but also allow them to manage their movie preferences, watch trailers, track their favourites, and create a more personalised movie experience.
