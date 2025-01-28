@@ -2,9 +2,6 @@
 const OMDbApiKey = '2fee485b';
 
 
-
-
-
 $(document).ready(function() {
 
     if(localStorage.getItem('dark-mode')==='enabled'){
